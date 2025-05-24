@@ -1,19 +1,40 @@
 global:
-  scrape_interval: 15s # Default scrape interval
+  scrape_interval: 15s
+  scrape_timeout: 10s # Explicitly set default timeout
 
 scrape_configs:
   - job_name: 'prometheus'
     static_configs:
       - targets: ['localhost:9090']
+        labels:
+          env: 'monitoring' # Optional: Add labels for clarity
 
   - job_name: 'bullmq-dev'
     scheme: https
     metrics_path: /retention-bullmq-metrics
     static_configs:
       - targets: ['retention-backend-dev.up.railway.app']
+        labels:
+          env: 'dev' # Optional: Label to distinguish dev environment
+    # Optional: Add if using self-signed certificates (use cautiously)
+    tls_config:
+      insecure_skip_verify: true
+    # Optional: Add if authentication is required
+    # basic_auth:
+    #   username: <username>
+    #   password: <password>
 
   - job_name: 'bullmq-prod'
     scheme: https
     metrics_path: /retention-bullmq-metrics
     static_configs:
       - targets: ['retention-backend.recovr.com']
+        labels:
+          env: 'prod' # Optional: Label to distinguish prod environment
+    # Optional: Add if using self-signed certificates (use cautiously)
+    tls_config:
+      insecure_skip_verify: true
+    # Optional: Add if authentication is required
+    # basic_auth:
+    #   username: <username>
+    #   password: <password>
