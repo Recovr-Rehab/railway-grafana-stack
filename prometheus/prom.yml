@@ -6,16 +6,14 @@ scrape_configs:
     static_configs:
       - targets: ['localhost:9090']
 
-  # - job_name: 'example_api'
-  #   scheme: http
-  #   static_configs:
-  #     - targets: ['example_api:9091']
+  - job_name: 'bullmq-dev'
+    scheme: https
+    metrics_path: /retention-bullmq-metrics
+    static_configs:
+      - targets: ['retention-backend-dev.up.railway.app']
 
-  #  ? TODO: add your services here
-  # - job_name: 'your-job-name'
-  #   scheme: https
-  #   static_configs:
-  #     - targets: ['URL_GOES_HERE']
-  #   basic_auth:
-  #     username: HTTP_AUTH_USERNAME_GOES_HERE
-  #     password: HTTP_AUTH_PASSWORD_GOES_HERE
+  - job_name: 'bullmq-prod'
+    scheme: https
+    metrics_path: /retention-bullmq-metrics
+    static_configs:
+      - targets: ['retention-backend.recovr.com']
